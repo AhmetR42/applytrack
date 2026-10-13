@@ -78,8 +78,8 @@ h1 { font-size: clamp(2rem, 4vw, 2.8rem); }
 
 @media (prefers-color-scheme: dark) {
     body { background: #070707; }
-    .topbar { background: rgba(7, 7, 7, .72); backdrop-filter: blur(8px); }
-    .card, .stats { background: rgba(18, 18, 18, .82); backdrop-filter: blur(6px); }
+    .topbar { background: rgba(7, 7, 7, .8); }
+    .card, .stats { background: rgba(18, 18, 18, .88); }
     .stat:last-child { background: var(--ink); }
     .table th { background: rgba(242, 242, 239, .95); }
     .footer { background: rgba(7, 7, 7, .72); }

@@ -89,6 +89,11 @@ function createLightRails(canvas, options) {
     let time = 0;
     let floorOffset = 0;
     let nextComet = 240;
+    // Canvas pixels per CSS pixel. The scene is soft, so it is drawn at
+    // (at most) 1x and lowered further if frames take too long; drawing at
+    // the screen's full 2x density costs four times the pixels and stutters.
+    let scale = 1;
+    let slowFrames = 0;
     const vp = { x: 0, y: 0 };
     const lean = { x: 0, y: 0, tx: 0, ty: 0 };
     const rails = [];
@@ -122,12 +127,21 @@ function createLightRails(canvas, options) {
     }
 
     function resize(width, height) {
-        const ratio = Math.min(window.devicePixelRatio || 1, 2);
         w = width;
         h = height;
-        canvas.width = w * ratio;
-        canvas.height = h * ratio;
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        canvas.width = Math.round(w * scale);
+        canvas.height = Math.round(h * scale);
+        ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    }
+
+    // dt is the frame time in 60 fps frames; lower the resolution while it stays high.
+    function watch(dt) {
+        slowFrames = dt > 1.35 ? slowFrames + 1 : Math.max(slowFrames - 1, 0);
+        if (slowFrames > 45 && scale > 0.5) {
+            scale = Math.max(scale - 0.25, 0.5);
+            slowFrames = 0;
+            resize(w, h);
+        }
     }
 
     function setOptions(next) {
@@ -296,6 +310,7 @@ function createLightRails(canvas, options) {
     }
 
     function frame(dt) {
+        watch(dt);
         time += dt;
         lean.x += (lean.tx - lean.x) * 0.03 * dt;
         lean.y += (lean.ty - lean.y) * 0.03 * dt;
