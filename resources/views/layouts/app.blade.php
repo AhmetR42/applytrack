@@ -11,6 +11,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
+    <canvas class="streaks" data-streaks hidden aria-hidden="true"></canvas>
     <header class="topbar">
         <div class="container topbar__inner">
             <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="brand">

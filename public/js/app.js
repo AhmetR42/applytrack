@@ -74,3 +74,103 @@ document.querySelectorAll('form[data-confirm]').forEach((form) => {
 document.querySelectorAll('[data-flash]').forEach((flash) => {
     setTimeout(() => flash.classList.add('is-hidden'), 4000);
 });
+
+// Animated "light speed" background: red and white streaks rushing out of a vanishing point.
+// Only drawn in dark mode; it pauses when the tab is hidden.
+const canvas = document.querySelector('[data-streaks]');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    const dark = window.matchMedia('(prefers-color-scheme: dark)');
+    const streaks = [];
+    let width = 0;
+    let height = 0;
+    let frame = null;
+
+    const resize = () => {
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    };
+
+    // Each streak lives on a fixed angle and travels from the centre to the edge.
+    const spawn = (streak = {}) => {
+        const side = Math.random() < 0.5 ? -1 : 1;
+        streak.angle = (side < 0 ? Math.PI : 0) + (Math.random() - 0.5) * 1.5;
+        streak.depth = Math.random() * 0.2;
+        streak.speed = 0.004 + Math.random() * 0.01;
+        streak.length = 0.08 + Math.random() * 0.25;
+        streak.width = 0.5 + Math.random() * 2;
+        streak.red = side < 0 ? Math.random() < 0.8 : Math.random() < 0.25;
+        return streak;
+    };
+
+    for (let i = 0; i < 140; i++) {
+        const streak = spawn();
+        streak.depth = Math.random();
+        streaks.push(streak);
+    }
+
+    const draw = () => {
+        ctx.fillStyle = 'rgba(7, 7, 7, 0.35)';
+        ctx.fillRect(0, 0, width, height);
+
+        const cx = width / 2;
+        const cy = height * 0.55;
+        const reach = Math.hypot(width, height) * 0.7;
+
+        for (const s of streaks) {
+            s.depth += s.speed * (0.4 + s.depth * 2.5);
+            if (s.depth > 1.2) spawn(s);
+
+            // Ease so streaks accelerate as they come closer
+            const head = Math.pow(s.depth, 2.2) * reach;
+            const tail = Math.pow(Math.max(s.depth - s.length, 0), 2.2) * reach;
+            const dx = Math.cos(s.angle);
+            const dy = Math.sin(s.angle) * 0.45;
+
+            const gradient = ctx.createLinearGradient(cx + dx * tail, cy + dy * tail, cx + dx * head, cy + dy * head);
+            const colour = s.red ? '255, 42, 53' : '235, 235, 230';
+            gradient.addColorStop(0, `rgba(${colour}, 0)`);
+            gradient.addColorStop(1, `rgba(${colour}, ${Math.min(s.depth, 0.9)})`);
+
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = s.width * (0.3 + s.depth);
+            ctx.beginPath();
+            ctx.moveTo(cx + dx * tail, cy + dy * tail);
+            ctx.lineTo(cx + dx * head, cy + dy * head);
+            ctx.stroke();
+        }
+    };
+
+    const loop = () => {
+        draw();
+        frame = requestAnimationFrame(loop);
+    };
+
+    const start = () => {
+        cancelAnimationFrame(frame);
+        canvas.hidden = !dark.matches;
+        if (!dark.matches) return;
+
+        resize();
+        ctx.fillStyle = '#070707';
+        ctx.fillRect(0, 0, width, height);
+
+        if (reducedMotion) {
+            for (let i = 0; i < 40; i++) draw();
+        } else {
+            loop();
+        }
+    };
+
+    window.addEventListener('resize', start);
+    dark.addEventListener('change', start);
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) cancelAnimationFrame(frame);
+        else start();
+    });
+    start();
+}

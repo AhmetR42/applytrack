@@ -22,7 +22,7 @@ I built it because I am looking for an internship myself and a spreadsheet was n
 - **CSV export** of all your applications.
 - **English / Dutch** interface with an animated language toggle. A test makes sure no Dutch translation is missing.
 - **Authorization**: users can only see and change their own applications (Laravel policies).
-- **Dark mode** that follows the system setting, a responsive layout and support for reduced motion.
+- **Dark mode** with an animated light-streak background (canvas), following the system setting, a responsive layout and support for reduced motion.
 
 ![Language toggle](docs/screenshots/language-toggle.gif)
 
@@ -99,7 +99,7 @@ The toggle is a small form with an `EN` and `NL` button. Without JavaScript it s
 
 | Dark mode | Dutch | Mobile |
 | --- | --- | --- |
-| ![Dark mode](docs/screenshots/dashboard-dark.png) | ![Dutch](docs/screenshots/dashboard-nl.png) | ![Mobile](docs/screenshots/mobile.png) |
+| ![Dark mode](docs/screenshots/landing-dark.png) | ![Dutch](docs/screenshots/dashboard-nl.png) | ![Mobile](docs/screenshots/mobile.png) |
 
 ## Ideas for later
 
