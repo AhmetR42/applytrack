@@ -7,8 +7,6 @@
 
 **ApplyTrack is a web app for students who are looking for an internship.** It keeps every application in one place, moves each one through a clear status pipeline, and shows how the search is going on a dashboard. The whole interface switches between English and Dutch with an animated toggle.
 
-I built it because I am looking for an internship myself and a spreadsheet was not enough.
-
 ![Dashboard](docs/screenshots/dashboard-light.png)
 
 ## Features
