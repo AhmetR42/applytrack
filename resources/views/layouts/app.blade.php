@@ -6,7 +6,7 @@
     <title>@yield('title', 'ApplyTrack') · ApplyTrack</title>
     <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&family=Lexend:wght@500;700;800&display=swap">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
@@ -14,8 +14,8 @@
     <header class="topbar">
         <div class="container topbar__inner">
             <a href="{{ auth()->check() ? route('dashboard') : route('home') }}" class="brand">
-                <span class="brand__mark" aria-hidden="true">A</span>
-                <span>ApplyTrack</span>
+                <x-logo />
+                <span><b>APPLY</b><span>TRACK</span></span>
             </a>
 
             @auth

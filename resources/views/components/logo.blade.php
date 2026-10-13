@@ -1,0 +1,5 @@
+<svg {{ $attributes->merge(['class' => 'logo', 'viewBox' => '0 0 32 32', 'aria-hidden' => 'true']) }} xmlns="http://www.w3.org/2000/svg">
+    <path class="logo__body" d="M0 0h24l8 8v24H0z"/>
+    <path class="logo__letter" d="M8 24 15 8h2l7 16h-3.6l-1.5-3.6h-5.8L11.6 24zm5.3-6.4h3.4L15 13.4z"/>
+    <path class="logo__corner" d="M24 0h8v8z"/>
+</svg>
