@@ -44,7 +44,7 @@ jobs:
         run: |
           docker run -d --name applytrack -p 8000:8000 applytrack
           for i in $(seq 1 30); do
-            curl -fs http://localhost:8000/up && exit 0
+            curl -fs http://localhost:8000/up && curl -fs http://localhost:8000/ > /dev/null && exit 0
             sleep 1
           done
           docker logs applytrack

@@ -10,6 +10,14 @@ fi
 mkdir -p database/data
 export DB_DATABASE="${DB_DATABASE:-/app/database/data/database.sqlite}"
 
+# "artisan serve" does not pass every environment variable to the web server,
+# so the database path must also be written to .env.
+if grep -q '^DB_DATABASE=' .env; then
+    sed -i "s|^DB_DATABASE=.*|DB_DATABASE=$DB_DATABASE|" .env
+else
+    echo "DB_DATABASE=$DB_DATABASE" >> .env
+fi
+
 if [ ! -f "$DB_DATABASE" ]; then
     touch "$DB_DATABASE"
     php artisan migrate --seed --force
