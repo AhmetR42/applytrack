@@ -22,9 +22,11 @@ I built it because I am looking for an internship myself and a spreadsheet was n
 - **CSV export** of all your applications.
 - **English / Dutch** interface with an animated language toggle. A test makes sure no Dutch translation is missing.
 - **Authorization**: users can only see and change their own applications (Laravel policies).
-- **Dark mode** with an animated light-streak background (canvas), following the system setting, a responsive layout and support for reduced motion.
+- **Dark mode** with an animated "light rails" background on canvas: slow light pulses, drifting dust, a rolling perspective floor, the odd comet, and a vanishing point that follows the mouse. It pauses in background tabs and respects reduced motion, a responsive layout and support for reduced motion.
 
 ![Language toggle](docs/screenshots/language-toggle.gif)
+
+![Animated dark-mode background](docs/screenshots/background.gif)
 
 ## Tech stack
 
