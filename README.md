@@ -51,7 +51,13 @@ Open http://localhost:8000 and log in with the demo account:
 - Email: `demo@applytrack.test`
 - Password: `password`
 
-### Option 2: Local PHP
+### Option 2: Online (free)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/AhmetR42/applytrack)
+
+The repository contains a `render.yaml`, so Render builds the Docker image and gives the app a public address. Log in with the demo account above. On the free plan the app sleeps after a while without visitors (the first visit then takes about a minute) and the database is reset to the demo data after every restart.
+
+### Option 3: Local PHP
 
 You need PHP 8.3+ and Composer.
 

@@ -7,6 +7,18 @@ if [ ! -f .env ]; then
     php artisan key:generate --force
 fi
 
+# Settings passed in by the host (for example Render) win over the defaults in .env.
+for key in APP_ENV APP_DEBUG APP_URL; do
+    eval "value=\${$key:-}"
+    if [ -n "$value" ]; then
+        if grep -q "^$key=" .env; then
+            sed -i "s|^$key=.*|$key=$value|" .env
+        else
+            echo "$key=$value" >> .env
+        fi
+    fi
+done
+
 mkdir -p database/data
 export DB_DATABASE="${DB_DATABASE:-/app/database/data/database.sqlite}"
 

@@ -14,7 +14,8 @@ COPY . .
 RUN composer dump-autoload --optimize \
     && chmod +x docker/entrypoint.sh
 
+ENV PORT=8000
 EXPOSE 8000
 
 ENTRYPOINT ["docker/entrypoint.sh"]
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD ["sh", "-c", "exec php artisan serve --host=0.0.0.0 --port=${PORT}"]
